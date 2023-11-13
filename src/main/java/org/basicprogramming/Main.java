@@ -1,4 +1,5 @@
 package org.basicprogramming;
+import org.basicprogramming.loaders.XLSLLoader;
 
 import java.io.IOException;
 
@@ -9,5 +10,8 @@ public class Main {
 
         var loader = new XLSLLoader(fileLocation);
         loader.load();
+        loader.getHeaders();
+        DB.main();
+
     }
 }
