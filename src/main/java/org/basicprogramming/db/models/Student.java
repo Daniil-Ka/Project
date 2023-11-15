@@ -9,8 +9,7 @@ import java.util.UUID;
 @Entity
 public class Student implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private UUID ulearnId;
 
     @Column()
     private String firstName;
@@ -21,17 +20,22 @@ public class Student implements Serializable {
     @Column()
     private String mail;
 
-    @Column()
-    private UUID ulearnId;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name="group_id")
     private Group group;
 
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "student",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.MERGE)
     private List<Mark> marks;
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 
     public Group getGroup() {
         return group;
@@ -45,8 +49,8 @@ public class Student implements Serializable {
         return marks;
     }
 
-    public Integer getId() {
-        return id;
+    public UUID getId() {
+        return ulearnId;
     }
 
     public String getFirstName() {
@@ -65,9 +69,6 @@ public class Student implements Serializable {
         return group;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

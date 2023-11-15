@@ -11,27 +11,34 @@ public class Lesson implements Serializable {
     private Integer id;
 
     @Column()
-    private String groupName;
+    private String lessonName;
 
     public Lesson() { }
 
-    public Lesson(String groupName) {
-        this.groupName = groupName;
+    public Lesson(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "lessonName='" + lessonName + '\'' +
+                '}';
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getLessonName() {
+        return lessonName;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 }

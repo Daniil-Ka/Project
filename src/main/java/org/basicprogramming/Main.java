@@ -1,4 +1,5 @@
 package org.basicprogramming;
+import org.basicprogramming.db.DB;
 import org.basicprogramming.loaders.XLSLLoader;
 
 import java.io.IOException;
@@ -9,9 +10,10 @@ public class Main {
         var fileLocation = "H:\\Download\\basicprogramming.xlsx";
 
         var loader = new XLSLLoader(fileLocation);
+        DB.init();
         loader.load();
-        loader.getHeaders();
-        DB.main();
+        //loader.getHeaders();
+
 
     }
 }

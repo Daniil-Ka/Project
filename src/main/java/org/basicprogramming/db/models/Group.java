@@ -17,8 +17,15 @@ public class Group implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "group",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.MERGE)
     private List<Student> students;
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupName='" + groupName + '\'' +
+                '}';
+    }
 
     public Integer getId() {
         return id;

@@ -13,7 +13,7 @@ public class Exercise implements Serializable {
     @Column
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name="lesson_id")
     private Lesson lesson;
 
@@ -22,6 +22,14 @@ public class Exercise implements Serializable {
     public Exercise(String name, Lesson lesson) {
         this.name = name;
         this.lesson = lesson;
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "name='" + name + '\'' +
+                ", lesson=" + lesson +
+                '}';
     }
 
     public Integer getId() {
