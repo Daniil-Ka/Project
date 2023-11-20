@@ -6,10 +6,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.basicprogramming.db.DB;
-import org.basicprogramming.db.models.Exercise;
-import org.basicprogramming.db.models.Lesson;
-import org.basicprogramming.db.models.Mark;
-import org.basicprogramming.db.models.Student;
+import org.basicprogramming.db.models.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,6 +21,7 @@ public class XLSLLoader implements TableLoader {
 
     private HashMap<Lesson, List<Exercise>> lessons;
     private List<Exercise> exercises;
+    private final HashMap<String, Group> groupsByName = new HashMap<>();
 
     public XLSLLoader(String path) {
         this.path = path;
@@ -56,12 +54,14 @@ public class XLSLLoader implements TableLoader {
             var row = basicProgrammingSheet.getRow(index);
             var student = readStudent(row);
             DB.addRecord(student);
+            DB.addRecords(student.getMarks());
         }
     }
 
     public Student readStudent(Row row) {
         var student = new Student();
         parseStudentData(row, student);
+        parseGroup(row, student);
         parseStudentMarks(row, student);
         return student;
     }
@@ -79,6 +79,23 @@ public class XLSLLoader implements TableLoader {
 
         student.setUlearnId(UUID.fromString(row.getCell(1).getStringCellValue()));
         student.setMail(row.getCell(2).getStringCellValue());
+
+        return student;
+    }
+
+    private Student parseGroup(Row row, Student student) {
+        String groupName = row.getCell(3).getStringCellValue();
+        if (groupName.isEmpty())
+            return student;
+
+        if (!groupsByName.containsKey(groupName)) {
+            var newGroup = new Group(groupName);
+            DB.addRecord(newGroup);
+            groupsByName.put(groupName, newGroup);
+        }
+
+        var group = groupsByName.get(groupName);
+        student.setGroup(group);
 
         return student;
     }

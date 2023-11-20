@@ -12,8 +12,5 @@ public class Main {
         var loader = new XLSLLoader(fileLocation);
         DB.init();
         loader.load();
-        //loader.getHeaders();
-
-
     }
 }

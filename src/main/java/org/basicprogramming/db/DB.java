@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+
+import java.util.Collection;
 import java.util.List;
 
 public class DB {
@@ -26,6 +28,18 @@ public class DB {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.persist(object);
+            session.getTransaction().commit();
+        }
+    }
+
+    public static <T> void addRecords(Collection<T> objects) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            for (var object : objects) {
+                session.persist(object);
+            }
+
             session.getTransaction().commit();
         }
     }

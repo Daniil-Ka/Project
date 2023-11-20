@@ -13,7 +13,7 @@ public class FileChooser {
     private static final String HOME = "user.home";
 
     private static final FileFilter[] FILTERS = new FileFilter[] {
-            new ExtensionFilter(".xlsl", "файлы с расширением xlsl")
+            new ExtensionFilter(".xlsx", "файлы с расширением xlsl")
     };
 
     private final Component component;
@@ -32,7 +32,9 @@ public class FileChooser {
         for (var filter : FILTERS) {
             fileChooser.addChoosableFileFilter(filter);
         }
+    }
 
+    private void setDefaultPath() {
         String home = System.getProperty(HOME);
         var homeFolder = new File(home);
         fileChooser.setCurrentDirectory(homeFolder);
@@ -63,6 +65,10 @@ class ExtensionFilter extends FileFilter {
     @Override
     public boolean accept(File f) {
         if (f != null) {
+            if (f.isDirectory())
+                return true;
+            var name = f.getName();
+            var t = f.getName().endsWith(extension);
             return f.getName().endsWith(extension);
         }
         return false;

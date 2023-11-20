@@ -20,6 +20,12 @@ public class Group implements Serializable {
             cascade = CascadeType.MERGE)
     private List<Student> students;
 
+    public Group() { }
+
+    public Group(String groupName) {
+        this.groupName = groupName;
+    }
+
     @Override
     public String toString() {
         return "Group{" +
