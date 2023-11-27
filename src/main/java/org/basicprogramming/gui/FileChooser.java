@@ -4,7 +4,6 @@ import org.apache.commons.math3.exception.NullArgumentException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.plaf.FileChooserUI;
 import java.awt.*;
 import java.io.File;
 

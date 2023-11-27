@@ -2,12 +2,9 @@ package org.basicprogramming.db;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import org.basicprogramming.db.models.Group;
-import org.basicprogramming.db.models.Student;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 
 import java.util.Collection;
 import java.util.List;
