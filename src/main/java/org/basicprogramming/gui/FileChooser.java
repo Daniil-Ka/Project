@@ -23,6 +23,7 @@ public class FileChooser {
     public FileChooser(Component component) {
         this.component = component;
         fileChooser = new JFileChooser();
+        setupFileChooser();
     }
 
     public void setupFileChooser() {
@@ -32,6 +33,7 @@ public class FileChooser {
         for (var filter : FILTERS) {
             fileChooser.addChoosableFileFilter(filter);
         }
+        fileChooser.setFileFilter(FILTERS[0]);
     }
 
     private void setDefaultPath() {
@@ -40,12 +42,12 @@ public class FileChooser {
         fileChooser.setCurrentDirectory(homeFolder);
     }
 
-    public void showChoose() {
-
+    public File showChoose() {
         var result = fileChooser.showOpenDialog(component);
         if (result == JFileChooser.APPROVE_OPTION) {
-            JOptionPane.showMessageDialog(component, fileChooser.getSelectedFile().toString());
+            return fileChooser.getSelectedFile();
         }
+        return null;
     }
 }
 
@@ -67,8 +69,6 @@ class ExtensionFilter extends FileFilter {
         if (f != null) {
             if (f.isDirectory())
                 return true;
-            var name = f.getName();
-            var t = f.getName().endsWith(extension);
             return f.getName().endsWith(extension);
         }
         return false;

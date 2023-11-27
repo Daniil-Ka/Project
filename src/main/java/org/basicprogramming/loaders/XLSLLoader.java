@@ -23,8 +23,11 @@ public class XLSLLoader implements TableLoader {
     private List<Exercise> exercises;
     private final HashMap<String, Group> groupsByName = new HashMap<>();
 
-    public XLSLLoader(String path) {
+    private ProgressListener progressBar;
+
+    public XLSLLoader(String path, ProgressListener progressBar) {
         this.path = path;
+        this.progressBar = progressBar;
     }
 
     public void load() throws IOException {
@@ -50,7 +53,10 @@ public class XLSLLoader implements TableLoader {
             }
         }
 
+        var max = basicProgrammingSheet.getLastRowNum() - 1;
         for (var index = 3; index < basicProgrammingSheet.getLastRowNum(); index++) {
+            progressBar.update(index - 3, max);
+
             var row = basicProgrammingSheet.getRow(index);
             var student = readStudent(row);
             DB.addRecord(student);
@@ -171,5 +177,9 @@ public class XLSLLoader implements TableLoader {
         }
 
         return result;
+    }
+
+    public void setProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 }

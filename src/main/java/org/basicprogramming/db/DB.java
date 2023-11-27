@@ -1,5 +1,7 @@
 package org.basicprogramming.db;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.basicprogramming.db.models.Group;
 import org.basicprogramming.db.models.Student;
 import org.hibernate.Session;
@@ -44,10 +46,17 @@ public class DB {
         }
     }
 
-    private static void fetchStudentRecord(Session session) {
-        Query query = session.createQuery("FROM Student");
-        List<Student> Students = query.list();
-        Students.forEach(obj -> System.out.println(obj.getFirstName()));
-        System.out.println("Reading student records...");
+    public static <T> List<T> loadAllData(Class<T> type) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<T> criteria = builder.createQuery(type);
+            criteria.from(type);
+            List<T> data = session.createQuery(criteria).getResultList();
+
+            session.getTransaction().commit();
+            return data;
+        }
     }
 }
