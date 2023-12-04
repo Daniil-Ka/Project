@@ -23,16 +23,31 @@ public class DB {
         }
     }
 
+    public static Session openSession() {
+        if (sessionFactory == null) {
+            init();
+        }
+        return sessionFactory.openSession();
+    }
+
     public static void addRecord(Object object) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = openSession()) {
             session.beginTransaction();
             session.persist(object);
             session.getTransaction().commit();
         }
     }
 
+    public static void mergeRecord(Object object) {
+        try (Session session = openSession()) {
+            session.beginTransaction();
+            session.merge(object);
+            session.getTransaction().commit();
+        }
+    }
+
     public static <T> void addRecords(Collection<T> objects) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = openSession()) {
             session.beginTransaction();
 
             for (var object : objects) {
@@ -44,7 +59,7 @@ public class DB {
     }
 
     public static <T> List<T> loadAllData(Class<T> type) {
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = openSession()) {
             session.beginTransaction();
 
             CriteriaBuilder builder = session.getCriteriaBuilder();

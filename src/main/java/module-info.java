@@ -10,6 +10,7 @@ module org.basicprogramming {
     requires org.apache.poi.ooxml;
     requires org.jfree.jfreechart;
     requires commons.math3;
+    requires sdk;
 
     exports org.basicprogramming;
     opens org.basicprogramming to javafx.fxml;

@@ -16,9 +16,10 @@
 
 
         <!-- Update database on startup -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Annotated entity classes -->
+        <mapping class="org.basicprogramming.db.models.VKUser"/>
         <mapping class="org.basicprogramming.db.models.Group"/>
         <mapping class="org.basicprogramming.db.models.Student"/>
         <mapping class="org.basicprogramming.db.models.Lesson"/>
