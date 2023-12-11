@@ -76,8 +76,8 @@ public class XLSLLoader implements TableLoader {
         String name = row.getCell(0).getStringCellValue();
         var splitName = name.split(" ", 2);
         if (splitName.length == 2) {
-            student.setFirstName(splitName[0]);
-            student.setLastName(splitName[1]);
+            student.setFirstName(splitName[1]);
+            student.setLastName(splitName[0]);
         }
         else {
             student.setFirstName(name);

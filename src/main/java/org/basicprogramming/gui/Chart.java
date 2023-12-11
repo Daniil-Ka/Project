@@ -11,29 +11,31 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.ui.ApplicationFrame;
 import org.jfree.chart.ui.TextAnchor;
 import org.jfree.chart.ui.UIUtils;
-import org.jfree.data.function.Function2D;
-import org.jfree.data.function.NormalDistributionFunction2D;
-import org.jfree.data.general.DatasetUtils;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
 
+// максимальные баллы по студентам
+// количество
 public class Chart extends ApplicationFrame {
     private static final String TITLE = "Нормальное распределение";
     //----------------------------------------------------------------
     public Chart(final String title)
     {
         super(title);
-        Function2D normal1=new NormalDistributionFunction2D(-2.0,0.5);
-        Function2D normal2=new NormalDistributionFunction2D( 0.0,0.4);
-        Function2D normal3=new NormalDistributionFunction2D( 0.8,1.5);
 
         XYSeriesCollection dataset = new XYSeriesCollection();
 
-        dataset.addSeries(createXYSeries("Normal1", normal1));
-        dataset.addSeries(createXYSeries("Normal2", normal2));
-        dataset.addSeries(createXYSeries("Normal3", normal3));
+        var series = new XYSeries("2016");
+        series.add(18, 567);
+        series.add(20, 612);
+        series.add(25, 800);
+        series.add(30, 980);
+        series.add(40, 1410);
+        series.add(50, 2350);
+
+        dataset.addSeries(series);
 
         JFreeChart chart = ChartFactory.createXYLineChart(TITLE,
                 null, "Y", dataset, PlotOrientation.VERTICAL,
@@ -76,16 +78,9 @@ public class Chart extends ApplicationFrame {
         setContentPane(chartPanel);
     }
     //----------------------------------------------------------------
-    private XYSeries createXYSeries(String caption, Function2D normal)
-    {
-        return DatasetUtils.sampleFunction2DToSeries(normal,
-                -4.5, 4.5, 100, caption);
-    }
-    //----------------------------------------------------------------
     public static void main(final String[] args)
     {
         DB.init();
-
 
         Plot demo = new Plot(TITLE);
         demo.pack();
